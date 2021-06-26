@@ -16,7 +16,7 @@ parser.add_argument('-us', '--unshift', type=int, help='Unshift cipher (every le
 parser.add_argument('-find', '--find_shift', action='store_true', help='Find the shift cipher value (iterate through all shift values 1 to 26)')
 parser.add_argument('-sr', '--set_replacement', help='Set Replacement cipher string (must be 26 characters. ignore values with *')
 parser.add_argument('-r', '--replace', action='store_true', help='Encode text using replacement cipher. Set the replacement cipher with --sr')
-parser.add_argument('-b', '--backwards', action='store_true', help='Replace using reverse alphabet (atbash)')
+parser.add_argument('-b', '--atbash', action='store_true', help='Replace using reverse alphabet (atbash)')
 parser.add_argument('-ss', '--shift_series', help='Shift by a series (1245632, etc). repeats if the string is longer than the series')
 parser.add_argument('-uss', '--unshift_series', help='Un-Shift a series (1245632, etc). repeats if the string is longer than the series')
 parser.add_argument('-q', help='The input string')
@@ -207,8 +207,8 @@ if __name__=='__main__':
 	if args.find_shift:
 		logger.info("finding shift for '{}'".format(q))
 		result = find_shift(q)
-	if args.backwards:
-		logger.info("using reverse alphabet for '{}'".format(q))
+	if args.atbash:
+		logger.info("using atbash (reverse alphabet) for '{}'".format(q))
 		result = atbash(q)
 	if args.shift_series is not None:
 		logger.info("shifting '{}' by series '{}'".format(q, args.shift_series))
