@@ -1,5 +1,7 @@
 #!/usr/bin/python
 import os, argparse, logging
+import sys
+
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 ignore = """ ,.;#$!"'*-?\r\n"""
@@ -25,11 +27,12 @@ args = parser.parse_args()
 def log_init():
 	global logger
 	logger = logging.getLogger('cryptologger')
-	formatter = logging.Formatter("%(asctime)s - %(levelname)8s - %(message)s")
+	fileformatter = logging.Formatter("%(asctime)s - %(levelname)8s - %(message)s")
+	streamformatter = logging.Formatter("%(levelname)s - %(message)s")
 	streamhandler = logging.StreamHandler()
 	filehandler = logging.FileHandler(LOGFILENAME)
-	streamhandler.setFormatter(formatter)
-	filehandler.setFormatter(formatter)
+	streamhandler.setFormatter(streamformatter)
+	filehandler.setFormatter(fileformatter)
 	streamhandler.setLevel(logging.WARNING)
 	filehandler.setLevel(logging.INFO)
 	logger.addHandler(filehandler)
@@ -135,7 +138,11 @@ def set_replacement(xr):
 	# unknown letter replacements should be a *
 	global replacement
 	if len(xr) != len(alphabet):
-		print "replacement cipher must be same length as alphabet ({}): {}".format(len(alphabet), alphabet)
+		logger.error("replacement ciphertext '{}' is not the same length as the alphabet '{}'".format(xr, alphabet))
+		if len(xr)<len(alphabet):
+			xr = xr + '*'*(len(alphabet)-len(xr))
+		else:
+			xr = xr[:len(alphabet)]
 	replacement = xr
 
 # encode a character with replacement cipher
@@ -181,6 +188,8 @@ def write_output(fname, text):
 
 if __name__=='__main__':
 	log_init()
+	if len(sys.argv)==1:
+		parser.print_help(sys.stderr)
 	q=""
 	result = []
 	if args.q is not None:
