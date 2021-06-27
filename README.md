@@ -1,6 +1,14 @@
 # crypto
 cryptography tools
 
+- Shift Cipher
+- Substitution Cipher
+- Atbash Cipher
+- Series Shift
+- Reading from / Writing to File
+- Ignored Characters
+
+
 # [Shift Cipher](https://en.wikipedia.org/wiki/Caesar_cipher)
 Each letter is replaced with a letter a fixed number of positions away in the alphabet.
 
@@ -39,6 +47,10 @@ This example replacement string will simply reverse the alphabet, also called an
 Reversing the cipher is done by providing the same replacement string:
 `python crypto.py -sr "zyxwvutsrqponmlkjihgfedcba" -r -q "gsrh rh z gvhg"` returns `this is a test`
 
+## Ignored substitutions
+If only the partial ciphertext is known, put an asterisk "\*" in place, and the character will not be replaced.
+
+`python crypto.py -r -sr "x***x***x*****x*****x*****" -q "this is a test"` will return `thxs xs x txst`
 
 # [Atbash Cipher](https://en.wikipedia.org/wiki/Atbash)
 The Atbash Cipher is an implementation of the Substitution Cipher where the alphabet is reversed
@@ -52,3 +64,38 @@ returns `gsrh rh z gvhg`
 
 # Shift Series
 An implementation of the Shift Cipher where the shift value changes. The user provides a series of numbers, which are converted from characters to integers. Each letter is shifted by the value. The series is repeated to the length of the input string.
+## Usage
+`python crypto.py -ss {series} -q {input string}`
+
+`python crypto.py -ss 123 -q "aaaaaaaaaaaaaaaaa"` returns `bcdbcdbcdbcdbcdbc`
+
+# Using Files
+
+## Input File
+input string can be read from a text file using the `-in` argument
+## Usage
+Lines that start with "#" will not be changed, only written as is.
+If the text file looks like this:
+
+> \# this line is ignored
+> 
+> this is a test
+
+`python crypto.py -b -in ~/tmp/input.txt` 
+returns:  
+`# this line is ignored`  
+`gsrh rh z gvhg`
+
+## Output File
+the output can be sent to a text file instead of the terminal  
+`python crypto.py -b -in ~/tmp/input.txt -out ~/tmp/output.txt`  
+cat ~/tmp/output.txt  
+> \# this line is ignored
+> 
+> gsrh rh z gvhg
+
+# Ignored Characters
+Punctuation characters that are not replaced in any of the methods:
+`<space> ,.;#$!"'*-?\r\n`
+
+
