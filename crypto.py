@@ -121,7 +121,6 @@ def shift_series(q, series, decode=False):
 
 def turn_series_into_values(series, decode=False):
 	logger.info("series entered as '{}' {}".format(series, "" if decode is False else "decoding"))
-
 	shift_by = []
 	invert = -1 if decode is True else 1
 	logger.debug("invert = {}".format(invert))
@@ -148,6 +147,10 @@ def set_replacement(xr):
 # encode a character with replacement cipher
 def get_replacement(c):
 	position = alphabet.find(c.lower())
+	logger.debug("replacement for {} is {}".format(c, replacement[position]))
+	if replacement[position]=="*":
+		logger.debug("{} ({}) not replaced with {}".format(c, position, replacement[position]))
+		return c
 	replaced_letter = replacement[position].upper() if c.isupper() else replacement[position]
 	logger.debug("{} ({}) replaced with {} ({})".format(c, position, replaced_letter, position))
 	return replaced_letter
