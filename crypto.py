@@ -8,7 +8,7 @@ ignore = """ ,.;#$!"'*-?\r\n"""
 LOGFILENAME = "logfile.log"
 replacement = alphabet
 logger = None
-look_for_words = ['me', 'my', 'mine', 'your', 'yours', 'our', 'ours', 'his', 'him', 'her', 'hers', 'the', 'and', 'what', 'for', 'that', 'they', 'them', 'how', 'why', 'when']
+look_for_words = ['an', 'and', 'for', 'he', 'her', 'hers', 'him', 'his', 'how', 'is', 'it', 'me', 'mine', 'my', 'our', 'ours', 'that', 'the', 'them', 'they', 'this', 'what', 'when', 'who', 'why', 'your', 'yours']
 
 parser = argparse.ArgumentParser(description = 'Encode and Decode shift and replacement ciphers')
 parser.add_argument('-s', '--shift', type=int, help='Shift cipher (every letter is shifted forward by this value)')
@@ -72,21 +72,20 @@ def shift(q, offset):
 def find_shift(q):
 	result = []
 	for offset in range(1,len(alphabet)):
-		shifted_string = shift(q, -offset)
+		shifted_string = shift(q, -offset)[0]
 		if findwords(shifted_string):
-			shifted_string.append('<---')
+			shifted_string = shifted_string + ' <---'
 		result.append("({})\t{}".format(offset, shifted_string))
 	return result
 
 # look for common words in the shifted string
 def findwords(q):
 	result = False
-	for line in q:
-		words = line.split(' ')
-		for word in words:
-			if word in look_for_words:
-				print("Word '{}' found".format(word))
-				result = True
+	words = q.split(' ')
+	for word in words:
+		if word in look_for_words:
+			logger.info("Word '{}' found".format(word))
+			result = True
 	return result
 
 
@@ -178,7 +177,7 @@ def read_input(fname):
 	result = ''
 	if not os.path.exists(fname):
 		msg = "path {} does not exist".format(fname)
-		print msg 
+		logger.error(msg)
 		return msg
 	with open(fname, 'r') as f:
 		text = f.readlines()
