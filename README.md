@@ -30,6 +30,40 @@ Note: There is no difference between using `-us` to shift backwards, or using `-
 
 `python crypto.py -us 5 -q "ymnx nx f yjxy"` and `python crypto.py -s -5 -q "ymnx nx f yjxy"` will return the same thing
 
+### Finding a shift value
+Quick brute-force way to search shift values from 1 to 25 
+`python crypto.py -find -q {input string}`
+Every shift from 1 to 25 will be output. Additionally, those strings will be searched for some common (English) words, and if the shifted string contains the word, a marker will be printed to draw attention to the string.
+
+For example, `python crypto.py -find -q "ymnx nx f yjxy"` will output
+
+```(1)	xlmw mw e xiwx
+(2)	wklv lv d whvw
+(3)	vjku ku c vguv
+(4)	uijt jt b uftu
+(5)	this is a test <---
+(6)	sghr hr z sdrs
+(7)	rfgq gq y rcqr
+(8)	qefp fp x qbpq
+(9)	pdeo eo w paop
+(10)	ocdn dn v ozno
+(11)	nbcm cm u nymn
+(12)	mabl bl t mxlm
+(13)	lzak ak s lwkl
+(14)	kyzj zj r kvjk
+(15)	jxyi yi q juij
+(16)	iwxh xh p ithi
+(17)	hvwg wg o hsgh
+(18)	guvf vf n grfg
+(19)	ftue ue m fqef
+(20)	estd td l epde
+(21)	drsc sc k docd
+(22)	cqrb rb j cnbc
+(23)	bpqa qa i bmab
+(24)	aopz pz h alza
+(25)	znoy oy g zkyz
+```
+
 # [Replacement / Substitution Cipher](https://en.wikipedia.org/wiki/Substitution_cipher)
 Each letter is replaced with a letter defined in a replacement ciphertext
 
