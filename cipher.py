@@ -228,7 +228,7 @@ if __name__=='__main__':
 		write_output(args.output, result)
 	else:
 		for r in result:
-			print r
+			print (r)
 	logger.info("Results:{}".format(result))
 
 
