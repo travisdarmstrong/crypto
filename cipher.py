@@ -26,7 +26,7 @@ args = parser.parse_args()
 
 def log_init():
 	global logger
-	logger = logging.getLogger('cryptologger')
+	logger = logging.getLogger('cipherlogger')
 	fileformatter = logging.Formatter("%(asctime)s - %(levelname)8s - %(message)s")
 	streamformatter = logging.Formatter("%(levelname)s - %(message)s")
 	streamhandler = logging.StreamHandler()
